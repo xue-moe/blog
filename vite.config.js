@@ -9,11 +9,18 @@ export default defineConfig({
     vue(),
     tailwindcss(),
   ],
-  base: './',
+  base: '/bolg/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     }
-  }
-
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        404: '404.html'
+      }
+    }
+  },
 });
