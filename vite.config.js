@@ -9,7 +9,7 @@ export default defineConfig({
     vue(),
     tailwindcss(),
   ],
-  base: '/blog/',
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
