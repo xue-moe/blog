@@ -1,38 +1,28 @@
-name: Deploy to GitHub Pages
+name: CI Github Pages
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # 只监听main分支的push操作
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code ️
         uses: actions/checkout@v3
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm  # 安装pnpm
 
-      - name: Cache pnpm store
-        uses: actions/cache@v3  # Use v3 instead of v2
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: pnpm run build
+      - name: Install dependencies and Build
+        run: |
+          pnpm install  # 使用pnpm安装依赖
+          pnpm run build  # 使用pnpm构建项目
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
-          branch: gh-pages
-          folder: dist
+          branch: gh-pages  # 部署到gh-pages分支
+          folder: dist  # 打包后的目录
